@@ -1,5 +1,5 @@
 {
-  "name": "@wrapa/analysis",
+  "name": "@spammy/analysis",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,7 +10,8 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@wrapa/domain": "workspace:*",
-    "openai": "^7.47.0"
+    "@spammy/domain": "workspace:*",
+    "openai": "^7.47.0",
+    "zod": "^4.6.7"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@wrapa/server",
+  "name": "@spammy/server",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,14 +9,18 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@openai/agents": "^0.21.0",
     "@hono/node-server": "^2.1.5",
-    "@wrapa/agents": "workspace:*",
-    "@wrapa/analysis": "workspace:*",
-    "@wrapa/ceremony": "workspace:*",
-    "@wrapa/domain": "workspace:*",
-    "@wrapa/parser": "workspace:*",
-    "@wrapa/production": "workspace:*",
-    "@wrapa/store": "workspace:*",
-    "hono": "^4.13.16"
+    "@spammy/agents": "workspace:*",
+    "@spammy/analysis": "workspace:*",
+    "@spammy/ceremony": "workspace:*",
+    "@spammy/domain": "workspace:*",
+    "@spammy/parser": "workspace:*",
+    "@spammy/production": "workspace:*",
+    "@spammy/store": "workspace:*",
+    "hono": "^4.13.16",
+    "openai": "^7.47.0",
+    "zod": "^4.6.7",
+    "@elevenlabs/elevenlabs-js": "^2.75.0"
   }
 }

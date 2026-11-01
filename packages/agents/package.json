@@ -1,5 +1,5 @@
 {
-  "name": "@wrapa/agents",
+  "name": "@spammy/agents",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@openai/agents": "^0.21.0",
-    "@wrapa/analysis": "workspace:*",
-    "@wrapa/domain": "workspace:*",
+    "@spammy/analysis": "workspace:*",
+    "@spammy/domain": "workspace:*",
     "openai": "^7.47.0",
     "zod": "^4.6.7"
   }

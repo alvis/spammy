@@ -1,17 +1,17 @@
 {
-  "name": "wrapa",
+  "name": "spammy",
   "version": "0.0.0",
   "private": true,
-  "description": "Wrapa \u2014 turn a WhatsApp group export into an animated award ceremony.",
+  "description": "Spammy \u2014 turn a WhatsApp group export into an animated award ceremony.",
   "type": "module",
   "packageManager": "pnpm@10.34.9",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "dev": "pnpm --parallel --filter @wrapa/server --filter @wrapa/web dev",
+    "dev": "pnpm --parallel --filter @spammy/server --filter @spammy/web dev",
     "start": "pnpm dev",
-    "build": "pnpm --filter @wrapa/web build",
+    "build": "pnpm --filter @spammy/web build",
     "typecheck": "pnpm -r --parallel typecheck",
     "test": "vitest run",
     "test:watch": "vitest"

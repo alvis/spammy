@@ -1,5 +1,5 @@
 {
-  "name": "@wrapa/web",
+  "name": "@spammy/web",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,9 +10,11 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@wrapa/domain": "workspace:*",
+    "@spammy/domain": "workspace:*",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "@fontsource/fredoka": "^5.2.8",
+    "@fontsource/nunito": "^5.2.7"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",

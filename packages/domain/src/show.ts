@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { ParsedChatSchema } from './chat';
+import { CostumeIdSchema } from './costume';
 
 /** one of the three fixed host personas, each bound to a fixed ElevenLabs voice */
 export const PersonaSchema = z.enum(['goldie', 'velvet', 'disco']);
@@ -42,6 +43,7 @@ export const CastMemberSchema = z.object({
   participantId: z.string().min(1),
   displayName: z.string().min(1),
   photoAssetId: z.string().nullable(),
+  costumeId: CostumeIdSchema.optional(),
   face: FaceBoxSchema.nullable(),
 });
 

@@ -1,4 +1,4 @@
-import type { Persona } from '@wrapa/domain';
+import type { Persona } from '@spammy/domain';
 
 /** environment variable holding each persona's fixed ElevenLabs voice id */
 export const PERSONA_VOICE_ENV = {

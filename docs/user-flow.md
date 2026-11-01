@@ -68,7 +68,7 @@ The header shows the brand, one dot per step (dots for finished steps are clicka
 - **Presets**: Whole year, Last 3 months, Summer, First half. The default is the whole span of the chat.
 - **Host line**: "Which stretch should count? The whole year, or just that one chaotic summer?"
 - **Primary**: **Next**.
-- **Data**: `settings.range`. The month counts come from the parsed chat (#1).
+- **Data**: `settings.range`. The month counts come from the parsed chat (#1). Multi-year chats keep readable month columns inside a horizontally scrollable chart, with explicit years and zero-count gap months; selecting dates never compresses the bars to fit the whole history.
 
 ### 6. Roast level (`spice`)
 
@@ -77,19 +77,20 @@ The header shows the brand, one dot per step (dots for finished steps are clicka
   - Playful roast: "Teasing, never cruel". This is the default.
   - Savage: "Nobody leaves unhurt".
 - **Host line**: "How hard should I go on them? {level} it is, unless you say otherwise."
-- **Primary**: **Write the awards**. This runs analysis, then award suggestion.
+- **Primary**: **Write the awards**. This runs analysis, then award suggestion. Show the current phase and elapsed time beside the submit button. **Cancel waiting** stops the browser request and preserves the chat and choices; failures and timeouts offer **Retry**. Late server results must not overwrite newer settings or a newer submission.
 - **Data**: `settings.roastLevel`. The primary button calls `POST /api/shows/:id/analysis` (pseudonymize, stats, one long-context read; #6) and then `POST /api/shows/:id/awards` (#7).
 
 ### 7. Awards (`awards`)
 
 - **Header row**: "{n} awards · 3 shows", **⟳ Shuffle all**, and **+ Add an award**.
-- **Award cards**: one card per award, grouped in order into three shows: The Golden Globes, The Yayademuy Awards, The Chat Gala. Each card shows:
+- **Award cards**: one card per award, grouped in show order. The sample has The Golden Globes, The Yayademuy Awards and The Chat Gala; live show groups are freely invented from the chat, as specified in the overrides below. Each card shows:
   - the show name;
   - the award title;
   - **⟳** to swap the award for another suggestion;
   - **✕** to remove it;
   - the nominee line (see [overrides](#product-decisions-that-override-the-prototype));
   - an evidence quote bubble with the stat, ending "· See the conversation →".
+- **Titles**: New generated and host-edited names use four words or fewer. Longer host input stays visible with an inline correction message; existing saved titles remain readable.
 - **Limits**: 3 to 12 awards. Removing stops at 3 and adding stops at 12. The agent suggests 9 by default.
 - **Receipts drawer**: tapping a quote bubble opens a right-side sheet. Escape or the backdrop closes it. It contains:
   - a header "{group} · {date}" and the award title;
@@ -99,20 +100,22 @@ The header shows the brand, one dot per step (dots for finished steps are clicka
   - the footer "Straight from your export, with the names you chose. Nothing here leaves this laptop."
 - **Host line**: "I came up with {n} awards. Swap any you don't like, shuffle the lot, or tap a quote to read the whole conversation."
 - **Primary**: **Lock them in**.
-- **Data**: awards are invented freely by the agent from the chat content and judged with verified receipts (#7). The host's choices go to `PUT /api/shows/:id/awards/:awardId` (#2). Quotes mask every name except the speaker's (`Receipt.maskedText`).
+- **Data**: awards are invented freely by the agent from the chat content and judged with verified receipts (#7). The host's choices go to `PUT /api/shows/:id/awards/:awardId` (#2). Displayed quotes mask every name except the speaker's and use the speaker's current cast name. The original `Receipt.quote` stays unchanged for source verification.
 
 ### 8. Who's who (`people`)
 
-- **Shows**: one card per person, containing:
+- **Shows**: one card per nominee in the selected awards, containing:
   - a round photo (tap it to choose an image; the badge reads "+ Photo", or "Change" once a photo is set);
   - "In the chat as "{raw export name}"";
   - an editable display name;
   - a costume preview and chooser using the supplied local `costumes/` artwork;
   - "Wins: {award titles}" or "Nominated, no wins this time".
+- **Eligibility**: Portrait uploads, group-photo assignments and generated portraits are available only to nominees in the selected awards. The server enforces the same rule without consulting hidden winners; non-nominated cast data and existing assets remain stored.
 - **Names**: renamed people update everywhere straight away, including award cards, receipts, the ceremony and the poster.
 - **Costumes**: select a costume per person from a shared catalog with stable IDs. Save the validated ID with the cast member and restore it on Back, reload and saved-show replay; older shows use a deterministic default. Preview the costume even without a photo, and preserve the face crop and artwork proportions when a photo is present. Reuse the same avatar composition for nominee cards, winner reveals, the finale, poster and MP4 exports. Costume selection is independent of the host persona and ceremony look, and requires no image generation or paid API call (#15).
+- **Character portraits**: optionally describe a fictional character and select a supplied costume reference. OpenAI receives that original PNG as an image-edit input; the generated portrait becomes the cast photo, with reference-sensitive local caching and provenance. This optional action is separate from choosing the local artwork costume.
 - **Host line**: "Last thing. WhatsApp names are a mess. Fix them here and add photos for the red carpet."
-- **Primary**: **Roll the show**. This starts production, then opens the player.
+- **Primary**: **Roll the show**. This starts production, then opens the player. Real production uses ElevenLabs for persona narration and music, saving measured audio and timing for playback and export. Missing server configuration shows a specific error and keeps the uploaded chat and choices. The fictional sample is explicitly a silent preview.
 - **Data**: `POST /api/shows/:id/photos` (#2). Portraits and group photos are both accepted (see overrides). Costume integration (#15) must persist the selection through the `POST /api/shows/:id/cast` update owned by #2 and the validated cast contract. **Roll the show** calls `POST /api/shows/:id/production`, which writes the script and records the narration (#8).
 
 ### 9. The show (`show`)
@@ -130,6 +133,10 @@ The ceremony player sits full width on a warm backdrop. It is a 16:9 stage that 
 | `env` | 6.5 per award | A sealed envelope wiggles ("The envelope, please."). It opens, a card slides out ("And the award goes to"), the winner appears in a gold ring with their name in foil and the stat, and confetti falls | The winner line |
 | `finale` | 9 | "That's a wrap." and a 3-column grid of the winners | "That's our show. Thank you for being this unwell in the group chat. See you next year." |
 
+**Character motion**: The composed costume and face enter and sway together for nominees, with a celebratory bounce for revealed winners. Poses follow scene time in both the live player and video export, so pausing and seeking are deterministic. Browser reduced-motion preference keeps characters static. Skipping ahead never reveals unopened sealed winners in the live finale.
+
+Nominee camera focus follows the measured name-and-stat word timings when narration is available, returning wide for the selected quotes. The silent sample uses the nine-second prototype schedule. Camera movement and audience motion also pause, seek and respect the browser's reduced-motion preference.
+
 **Player chrome**:
 
 - A poster overlay with a big play button before the show starts.
@@ -140,7 +147,7 @@ The ceremony player sits full width on a warm backdrop. It is a 16:9 stage that 
 
 **End overlay**: **↺ Play again** and **Share it →**, which goes to Share.
 
-**Data**: the live player reads the produced show from `GET /api/shows/:id` (#5).
+**Data**: setup reads the public show from `GET /api/shows/:id`; replay loads the validated produced timeline from `GET /api/shows/:id/ceremony` once the show is ready (#5). Arbitrary JSON asset downloads remain unavailable.
 
 ### 10. Share (`share`)
 
@@ -167,7 +174,8 @@ The prototype is a quick sketch. These confirmed decisions take precedence over 
 | The show, `env` scene | The envelope opens by itself after 1.6 s | **Tap to open** in the live player. The scene holds on the wiggling envelope with "Tap to break the seal" until the host taps it or presses Space. MP4 exports play straight through with the prototype timing. | The host performs the reveal live in the room |
 | Who's who, step 8 | Photos and names, with no costume chooser | Add a per-person costume preview and chooser within this step, using the supplied `costumes/` artwork. Persist a stable costume ID and reuse the same avatar composition in the ceremony and exports. Older shows use a default, and missing photos still have a useful preview (#15). | Costumes from #13 should appear consistently throughout the journey without adding a step |
 | Who's who, step 8 | One portrait per person | Each person accepts a portrait or a **group photo**. For a group photo, `gpt-6.1-terra` finds the faces and the host taps the face that belongs to this person. The crop is stored as a `FaceBox`. This is post-hackathon (#10); until then, use the portrait only. | Most people have group photos, not headshots |
-| Share, step 10 | Includes **Copy share link** | No share link. The app is local-only and nothing is uploaded. Offer **Download video (MP4)** (16:9 and 9:16), **Download poster (PNG)** and **Save to my shows**. | Privacy promise: nothing leaves the laptop |
+| Share, step 10 | Includes **Copy share link** | No share link. Exports and saved shows remain local. Offer **Download video (MP4)** (16:9 and 9:16), **Download poster (PNG)** and **Save to my shows**. Analysis, narration and opt-in image features use the selected providers as described in the privacy notice. | Share never publishes a hosted copy of the chat or ceremony |
+| Who's who, step 8 | Portrait upload only | Also offer a fictional character portrait using a selected original PNG from `costumes/` as the OpenAI image-edit reference. | The character costume follows the supplied reference designs |
 | Upload, step 4 | Scripted progress and log lines | Progress and log lines come from the real parse. The sample button loads the fictional Brunch Club. | Honest feedback |
 | Awards, step 7 | Picks from a fixed pool of 23 awards | Awards are invented freely by the agent from the chat (`gpt-6-astra`). ⟳ asks for a fresh suggestion, and **Shuffle all** asks for a new set. | Awards should come from what actually happened |
 | The show, step 9 | Captions only | The narrator voices every line (ElevenLabs), reads the selected quotes with other names masked, and plays music under it. Captions are burned into exports. | Confirmed production plan |
