@@ -1,0 +1,22 @@
+{
+  "name": "@wrapa/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
+    "start": "tsx --env-file-if-exists=../../.env src/main.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.5",
+    "@wrapa/agents": "workspace:*",
+    "@wrapa/analysis": "workspace:*",
+    "@wrapa/ceremony": "workspace:*",
+    "@wrapa/domain": "workspace:*",
+    "@wrapa/parser": "workspace:*",
+    "@wrapa/production": "workspace:*",
+    "@wrapa/store": "workspace:*",
+    "hono": "^4.13.16"
+  }
+}
