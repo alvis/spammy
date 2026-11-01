@@ -21,6 +21,8 @@ packages/production ElevenLabs narration, measured timing lock, music composed t
 packages/store    one JSON file per show under WRAPA_DATA_DIR
 packages/ceremony HyperFrames composition, local render (16:9, 9:16), poster PNG
 fixtures/         synthetic exports only — never commit real chats
+docs/prototype    clickable HTML prototype of the host flow and ceremony (reference only)
+docs/user-flow.md the host journey, step by step, with overrides to the prototype
 ```
 
 Dependency direction (no cycles, no upward imports):
@@ -29,6 +31,15 @@ Dependency direction (no cycles, no upward imports):
 - `parser`, `analysis`, `store`, `production`, `ceremony` import only `domain`.
 - `agents` imports `domain` and `analysis` (types).
 - `apps/server` composes all packages. `apps/web` imports only `domain` (contracts) and talks to the server over `/api`.
+
+## Follow the prototype flow
+
+Every screen, route and agent must follow the host journey in [`docs/user-flow.md`](docs/user-flow.md) and the clickable prototype in [`docs/prototype/`](docs/prototype/README.md). Run the prototype with `npx serve docs/prototype`.
+
+- Keep the prototype's step order, step names, host lines, button labels and motion. The step ids in `apps/web/src/flow.ts` are fixed.
+- When the prototype and `docs/user-flow.md` disagree, `docs/user-flow.md` wins. Its "Product decisions that override the prototype" section is binding.
+- Rebuild the prototype in React and HyperFrames. Never import `docs/prototype/` files into the app.
+- To change the flow, update `docs/user-flow.md` in the same pull request and say why.
 
 ## Commands
 

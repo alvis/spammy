@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f7f3ec;color:#1c1915;font-family:Nunito,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#8a6420}a:hover{color:#1c1915}
+button,input{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}60%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@keyframes shimmer{from{background-position:0% 0}to{background-position:200% 0}}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes bulbs{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
+</helmet>
+<sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<header style="position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:20px;padding:0 24px;height:64px;background:rgba(247,243,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(28,25,21,.08)">
+  <button onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;flex:none;border:none;background:transparent;padding:0;cursor:pointer;color:#1c1915">
+    <span style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#7d5a1c,#f0d48a 45%,#b8862f 70%,#6f4f18);box-shadow:0 2px 8px rgba(184,134,47,.45)"></span>
+    <span style="font:700 23px/1 Fredoka,sans-serif;letter-spacing:-.01em">The Spammy</span>
+  </button>
+  <div style="flex:1;display:flex;justify-content:center;align-items:center;gap:14px;min-width:0">
+    <div style="display:flex;gap:5px">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="10">
+        <button onClick="{{ d.onClick }}" title="{{ d.label }}" style="width:{{ d.w }};height:8px;border-radius:999px;border:none;padding:0;cursor:pointer;background:{{ d.bg }};transition:width .3s,background .3s"></button>
+      </sc-for>
+    </div>
+    <span style="font:800 13px Nunito;color:#5f584e;white-space:nowrap">{{ stepLabel }}</span>
+  </div>
+  <div style="flex:none;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;border:1px solid rgba(28,25,21,.12);font:700 12px ui-monospace,Menlo,monospace;color:#4a443b"><span style="width:7px;height:7px;border-radius:50%;background:#3aa86b"></span>localhost:4173</div>
+</header>
+
+<sc-if value="{{ isFlow }}" hint-placeholder-val="{{ true }}">
+<section style="position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column;align-items:center;padding:40px 24px 36px;gap:28px">
+  <div style="position:absolute;left:50%;top:-12%;width:2400px;height:2400px;border-radius:50%;background:repeating-conic-gradient(rgba(212,168,75,.12) 0deg 5deg,rgba(212,168,75,0) 5deg 12deg);animation:spin 160s linear infinite;pointer-events:none;mask-image:radial-gradient(circle,#000 8%,transparent 40%);-webkit-mask-image:radial-gradient(circle,#000 8%,transparent 40%)"></div>
+
+  <sc-if value="{{ isHello }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;max-width:900px">
+      <div style="animation:pop .9s cubic-bezier(.2,1.2,.4,1) both"><dc-import name="Host" persona="{{ persona }}" size="{{ 170 }}" talking="{{ talking }}" hint-size="170px,170px"></dc-import></div>
+      <div style="position:relative;padding:20px 38px 26px;border-radius:34px;background:#fffaf0;box-shadow:0 30px 80px -30px rgba(140,100,30,.45),inset 0 0 0 2px #e6c77c">
+        <div style="position:absolute;left:22px;right:22px;top:9px;height:8px;background:radial-gradient(circle,#f4cf6e 3px,transparent 3.6px) 0 0/22px 8px repeat-x;animation:bulbs 1.2s steps(2) infinite"></div>
+        <div style="position:absolute;left:22px;right:22px;bottom:9px;height:8px;background:radial-gradient(circle,#f4cf6e 3px,transparent 3.6px) 11px 0/22px 8px repeat-x;animation:bulbs 1.2s steps(2) .6s infinite"></div>
+        <h1 style="margin:0;font:700 clamp(54px,9vw,118px)/.9 Fredoka,sans-serif;letter-spacing:-.04em;background-image:linear-gradient(100deg,#6f4f18 0%,#b8862f 22%,#f0d48a 40%,#c99a3e 58%,#7d5a1c 78%,#b8862f 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite;padding-bottom:.06em">Who ate this year?</h1>
+      </div>
+      <div style="display:grid;max-width:620px;font:700 clamp(16px,1.7vw,20px)/1.5 Nunito;color:#3d372f"><span style="grid-area:1/1;visibility:hidden">{{ lineFull }}</span><span style="grid-area:1/1">{{ lineTyped }}</span></div>
+    </div>
+    <div style="position:relative;width:100%;max-width:880px;display:flex;flex-direction:column;gap:12px">
+      <div style="font:900 12px Nunito;letter-spacing:.18em;text-transform:uppercase;color:#8a6420">Your previous shows</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px">
+        <sc-for list="{{ library }}" as="v" hint-placeholder-count="3">
+          <button onClick="{{ v.onPlay }}" style="border:none;cursor:pointer;padding:0;border-radius:22px;background:#fffdf9;box-shadow:inset 0 0 0 1px rgba(28,25,21,.08);overflow:hidden;display:flex;flex-direction:column;text-align:left;color:#1c1915;transition:transform .2s" style-hover="transform:translateY(-3px)">
+            <div style="position:relative;aspect-ratio:16/9;background:{{ v.bg }};display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+              <span style="font:700 22px/1 Fredoka;letter-spacing:-.02em;background-image:{{ v.foil }};-webkit-background-clip:text;background-clip:text;color:transparent">{{ v.title }}</span>
+              <span style="width:40px;height:40px;border-radius:50%;background:{{ v.foil }};display:grid;place-items:center"><span style="width:0;height:0;margin-left:3px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:12px solid #1c1915"></span></span>
+              <span style="position:absolute;right:10px;bottom:8px;padding:3px 8px;border-radius:6px;background:rgba(28,25,21,.75);color:#fff;font:700 11px ui-monospace,Menlo,monospace">{{ v.len }}</span>
+            </div>
+            <div style="padding:12px 14px;display:flex;flex-direction:column;gap:2px">
+              <span style="font:800 15px Nunito">{{ v.title }} · {{ v.year }}</span>
+              <span style="font:700 12px Nunito;color:#6e665b">{{ v.kind }} · {{ v.awards }} awards · {{ v.when }}</span>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showHostRow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;display:flex;align-items:flex-end;gap:16px;width:100%;max-width:{{ rowMax }}">
+      <dc-import name="Host" persona="{{ persona }}" size="{{ 100 }}" talking="{{ talking }}" hint-size="100px,100px"></dc-import>
+      <div style="flex:1;min-width:0;margin-bottom:20px;padding:15px 20px;border-radius:24px 24px 24px 6px;background:#fffdf9;box-shadow:0 14px 40px -24px rgba(140,100,30,.5),inset 0 0 0 1px rgba(28,25,21,.08)">
+        <div style="font:900 11px Nunito;letter-spacing:.14em;text-transform:uppercase;color:#8a6420;margin-bottom:5px">{{ hostName }} · your AI host</div>
+        <div style="display:grid;font:700 clamp(16px,1.6vw,19px)/1.45 Nunito"><span style="grid-area:1/1;visibility:hidden">{{ lineFull }}</span><span style="grid-area:1/1">{{ lineTyped }}</span></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isKind }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+      <sc-for list="{{ kinds }}" as="o" hint-placeholder-count="8">
+        <button onClick="{{ o.onClick }}" style="position:relative;border:none;cursor:pointer;padding:20px 18px;border-radius:24px;background:{{ o.bg }};box-shadow:{{ o.shadow }};display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;color:#1c1915;min-height:118px;transition:transform .2s" style-hover="transform:translateY(-3px)">
+          <span style="position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:900 12px Nunito;background:{{ o.checkBg }}">{{ o.check }}</span>
+          <span style="font:700 22px/1.05 Fredoka">{{ o.label }}</span>
+          <span style="font:700 13px/1.4 Nunito;color:#6e665b">{{ o.desc }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isHostPick }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+      <sc-for list="{{ hosts }}" as="h" hint-placeholder-count="3">
+        <button onClick="{{ h.onClick }}" style="position:relative;border:none;cursor:pointer;padding:28px 20px 22px;border-radius:28px;background:#fffdf9;box-shadow:{{ h.shadow }};display:flex;flex-direction:column;align-items:center;gap:12px;color:#1c1915;text-align:center;transition:transform .2s" style-hover="transform:translateY(-4px)">
+          <span style="position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:900 12px Nunito;background:{{ h.checkBg }}">{{ h.check }}</span>
+          <div style="height:146px;display:flex;align-items:flex-end;padding-top:30px"><dc-import name="Host" persona="{{ h.id }}" size="{{ 112 }}" talking="{{ h.talking }}" hint-size="112px,112px"></dc-import></div>
+          <span style="font:700 26px/1 Fredoka">{{ h.name }}</span>
+          <span style="font:800 14px Nunito;color:#8a6420">{{ h.vibe }}</span>
+          <span style="font:700 14px/1.45 Nunito;color:#5f584e;padding:10px 14px;border-radius:16px;background:#f5efe3">{{ h.sample }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:760px">
+      <sc-if value="{{ upIdle }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ startUpload }}" style="width:100%;border:none;cursor:pointer;padding:44px 28px;border-radius:32px;background:linear-gradient(160deg,#fffdf8,#fbf1d8);box-shadow:0 24px 60px -24px rgba(140,100,30,.5),inset 0 0 0 2px #e6c77c;outline:2px dashed #c99a3e;outline-offset:-16px;display:flex;flex-direction:column;align-items:center;gap:14px;color:#1c1915" style-hover="transform:translateY(-3px)">
+          <span style="width:80px;height:100px;border-radius:14px;background:#fffdf9;box-shadow:0 14px 30px rgba(140,100,30,.25),inset 0 0 0 1px rgba(28,25,21,.1);display:grid;place-items:center;font:800 14px ui-monospace,Menlo,monospace;color:#8a6420;animation:float 3s ease-in-out infinite">.zip</span>
+          <span style="font:600 clamp(24px,3vw,30px) Fredoka">Drop your WhatsApp export here</span>
+          <span style="font:800 13px Nunito;color:#5f584e">Open the group → tap its name → Export chat → Without media</span>
+          <span style="margin-top:4px;padding:11px 20px;border-radius:999px;background:#1c1915;color:#f7f1e3;font:800 14px Nunito">or try the sample: Brunch Club</span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ upBusy }}" hint-placeholder-val="{{ false }}">
+        <div style="border-radius:32px;background:#fffdf9;box-shadow:0 24px 60px -24px rgba(140,100,30,.45),inset 0 0 0 2px #e6c77c;padding:28px;display:flex;flex-direction:column;gap:18px;animation:rise .5s ease both">
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <div style="flex:1;min-width:200px"><div style="font:800 16px Nunito">WhatsApp Chat - Brunch Club.zip</div><div style="font:700 13px Nunito;color:#6e665b">4.8 MB · {{ upStatus }}</div></div>
+            <div style="font:700 38px Fredoka;color:#8a6420">{{ progLabel }}</div>
+          </div>
+          <div style="height:12px;border-radius:999px;background:#f1ebdf;overflow:hidden"><div style="height:100%;width:{{ progLabel }};border-radius:999px;background:linear-gradient(90deg,#8a6420,#f0d48a,#b8862f,#f0d48a);background-size:200% 100%;animation:shimmer 1.4s linear infinite"></div></div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ logs }}" as="l" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:12px;font:700 15px Nunito;color:#3d372f;animation:rise .4s ease both"><span style="width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;flex:none;background:{{ l.dotBg }};color:{{ l.dotFg }}">{{ l.mark }}</span>{{ l.text }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isRange }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;border-radius:32px;background:#fffdf9;box-shadow:inset 0 0 0 1px rgba(28,25,21,.08);padding:28px;display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:700 clamp(28px,3.4vw,40px)/1 Fredoka;letter-spacing:-.02em">{{ rangeLabel }}</span><span style="font:800 14px Nunito;color:#6e665b">{{ rangeCount }} messages · tap a month to start, another to end</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ presets }}" as="p" hint-placeholder-count="4">
+            <button onClick="{{ p.onClick }}" style="padding:8px 14px;border-radius:999px;border:1px solid rgba(28,25,21,.14);background:{{ p.bg }};color:{{ p.fg }};font:800 13px Nunito;cursor:pointer">{{ p.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:8px;height:200px">
+        <sc-for list="{{ months }}" as="m" hint-placeholder-count="10">
+          <button onClick="{{ m.onClick }}" style="flex:1;height:100%;border:none;padding:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px">
+            <span style="font:800 11px Nunito;color:{{ m.numFg }}">{{ m.short }}</span>
+            <span style="width:100%;height:{{ m.h }};border-radius:10px 10px 4px 4px;background:{{ m.bg }};transition:background .2s"></span>
+            <span style="font:800 13px Nunito;color:{{ m.fg }}">{{ m.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSpice }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+      <sc-for list="{{ spices }}" as="o" hint-placeholder-count="3">
+        <button onClick="{{ o.onClick }}" style="position:relative;border:none;cursor:pointer;padding:24px 22px;border-radius:28px;background:#fffdf9;box-shadow:{{ o.shadow }};display:flex;flex-direction:column;align-items:flex-start;gap:10px;color:#1c1915;text-align:left" style-hover="transform:translateY(-4px)">
+          <span style="position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:900 12px Nunito;background:{{ o.checkBg }}">{{ o.check }}</span>
+          <span style="display:flex;gap:4px"><sc-for list="{{ o.flames }}" as="f" hint-placeholder-count="3"><span style="width:14px;height:14px;border-radius:50%;background:{{ f }}"></span></sc-for></span>
+          <span style="font:700 26px/1 Fredoka">{{ o.label }}</span>
+          <span style="font:800 14px Nunito;color:#8a6420">{{ o.desc }}</span>
+          <span style="font:700 14px/1.45 Nunito;color:#5f584e;padding:10px 14px;border-radius:16px;background:#f5efe3">{{ o.sample }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAwards }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:1000px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font:900 12px Nunito;letter-spacing:.18em;text-transform:uppercase;color:#8a6420">{{ awardsCount }} awards · 3 shows</span>
+        <div style="display:flex;gap:8px">
+          <button onClick="{{ shuffleAll }}" style="padding:9px 16px;border-radius:999px;border:1px solid rgba(28,25,21,.16);background:#fffdf9;font:900 13px Nunito;cursor:pointer;color:#1c1915">⟳ Shuffle all</button>
+          <button onClick="{{ addAward }}" style="padding:9px 16px;border-radius:999px;border:none;background:#1c1915;color:#f7e3a8;font:900 13px Nunito;cursor:pointer">+ Add an award</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px">
+        <sc-for list="{{ awardCards }}" as="a" hint-placeholder-count="9">
+          <div style="border-radius:26px;background:#fffdf9;box-shadow:inset 0 0 0 1px rgba(28,25,21,.08);padding:20px;display:flex;flex-direction:column;gap:14px;animation:pop .45s ease both">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font:900 10px Nunito;letter-spacing:.16em;text-transform:uppercase;color:#8a6420">{{ a.showName }}</span><span style="font:700 21px/1.1 Fredoka;text-wrap:balance">{{ a.title }}</span></div>
+              <div style="display:flex;gap:4px;flex:none">
+                <button onClick="{{ a.onSwap }}" title="Swap for another award" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(28,25,21,.14);background:#fffdf9;cursor:pointer;font:900 14px Nunito;color:#1c1915">⟳</button>
+                <button onClick="{{ a.onRemove }}" title="Remove" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(28,25,21,.14);background:#fffdf9;cursor:pointer;font:900 13px Nunito;color:#1c1915">✕</button>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:44px;height:44px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#7d5a1c,#f0d48a 45%,#b8862f);flex:none"><div style="width:100%;height:100%;border-radius:50%;background-color:{{ a.win.tint }};background-image:{{ a.win.img }};background-size:cover;background-position:center;display:grid;place-items:center;font:700 18px Fredoka">{{ a.win.ini }}</div></div>
+              <div style="display:flex;flex-direction:column;min-width:0"><span style="font:800 15px Nunito">{{ a.win.name }} <span style="color:#8a6420">wins</span></span><span style="font:700 12px Nunito;color:#6e665b">over {{ a.others }}</span></div>
+            </div>
+            <button onClick="{{ a.onCtx }}" style="border:none;cursor:pointer;padding:12px 14px;border-radius:4px 18px 18px 18px;background:#f3ecdf;text-align:left;display:flex;flex-direction:column;gap:4px;color:#1c1915" style-hover="background:#efe3c8">
+              <span style="font:700 15px/1.4 Nunito">“{{ a.quote }}”</span>
+              <span style="font:800 12px Nunito;color:#8a6420">{{ a.stat }} · See the conversation →</span>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPeople }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px">
+      <sc-for list="{{ people }}" as="p" hint-placeholder-count="6">
+        <div style="border-radius:26px;background:#fffdf9;box-shadow:inset 0 0 0 1px rgba(28,25,21,.08);padding:18px;display:flex;align-items:center;gap:16px">
+          <label style="position:relative;flex:none;cursor:pointer">
+            <input type="file" accept="image/*" onChange="{{ p.onPhoto }}" style="display:none">
+            <div style="width:80px;height:80px;border-radius:50%;background-color:{{ p.tint }};background-image:{{ p.img }};background-size:cover;background-position:center;display:grid;place-items:center;font:700 32px Fredoka;color:#1c1915;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)">{{ p.ini }}</div>
+            <span style="position:absolute;right:-6px;bottom:-4px;padding:5px 9px;border-radius:999px;background:#1c1915;color:#f7e3a8;font:900 11px Nunito;white-space:nowrap">{{ p.photoLabel }}</span>
+          </label>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+            <span style="font:800 11px Nunito;color:#8b8274">In the chat as “{{ p.raw }}”</span>
+            <input value="{{ p.name }}" onChange="{{ p.onName }}" style="width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(28,25,21,.16);background:#fbf8f2;font:700 20px Fredoka;color:#1c1915;outline:none">
+            <span style="font:700 12px Nunito;color:#6e665b">{{ p.wins }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isShare }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:100%;max-width:880px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+      <div style="flex:1 1 400px;min-width:0;border-radius:32px;background:#fffaf0;box-shadow:0 40px 90px -40px rgba(140,100,30,.6),inset 0 0 0 2px #e6c77c;padding:30px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;font:900 11px Nunito;letter-spacing:.18em;text-transform:uppercase;color:#8a6420"><span>The Spammy</span><span>{{ rangeLabel }}</span></div>
+        <div style="font:700 clamp(36px,4.6vw,52px)/.92 Fredoka;letter-spacing:-.035em;background-image:linear-gradient(100deg,#6f4f18,#b8862f 25%,#e3c06e 45%,#b8862f 65%,#6f4f18);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite;padding-bottom:.06em">{{ showTitle }}</div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ winners }}" as="w" hint-placeholder-count="9">
+            <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid rgba(140,100,30,.18)">
+              <span style="flex:1;min-width:0;font:800 14px/1.3 Nunito;color:#5f584e">{{ w.title }}</span>
+              <span style="width:28px;height:28px;border-radius:50%;background-color:{{ w.tint }};background-image:{{ w.img }};background-size:cover;background-position:center;display:grid;place-items:center;font:700 12px Fredoka;flex:none">{{ w.ini }}</span>
+              <span style="font:700 17px Fredoka;min-width:64px">{{ w.name }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ shareActions }}" as="a" hint-placeholder-count="3">
+          <button onClick="{{ a.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:18px;border:none;background:{{ a.bg }};color:{{ a.fg }};font:900 15px Nunito;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(28,25,21,.12)" style-hover="transform:translateX(4px)">{{ a.label }}<span>{{ a.icon }}</span></button>
+        </sc-for>
+        <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-start;margin-top:6px;padding:10px 16px;border-radius:999px;background:#1c1915;color:#f7e3a8;font:800 14px Nunito;animation:pop .4s ease both">{{ toast }}</div></sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;width:100%;max-width:{{ rowMax }};margin-top:auto;padding-top:6px">
+    <div><sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ back }}" style="padding:14px 18px;border-radius:999px;border:none;background:transparent;color:#5f584e;font:900 15px Nunito;cursor:pointer" style-hover="color:#1c1915">← Back</button></sc-if></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <sc-if value="{{ hasAlt }}" hint-placeholder-val="{{ false }}"><button onClick="{{ alt }}" style="padding:16px 24px;border-radius:999px;border:1px solid rgba(28,25,21,.2);background:#fffdf9;color:#1c1915;font:900 16px Nunito;cursor:pointer" style-hover="background:#efe8da">{{ altLabel }}</button></sc-if>
+      <button onClick="{{ primary }}" style="padding:17px 34px;border-radius:999px;border:none;background:#1c1915;color:#f7e3a8;font:900 16px Nunito;cursor:pointer;opacity:{{ primaryOpacity }};box-shadow:0 12px 28px -10px rgba(28,25,21,.55)" style-hover="background:#3a332a">{{ primaryLabel }}</button>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isShow }}" hint-placeholder-val="{{ false }}">
+  <section style="flex:1;display:flex;justify-content:center;padding:28px 24px 40px;background:#efe8da">
+    <div style="width:100%;max-width:1200px">
+      <dc-import name="Show" shows="{{ showData }}" title="{{ showTitle }}" subtitle="{{ showSub }}" persona="{{ persona }}" host-name="{{ hostName }}" look="{{ showLook }}" kicker="{{ showKicker }}" autoplay="{{ autoplay }}" on-done="{{ onShowDone }}" on-exit="{{ onShowExit }}" hint-size="100%,680px"></dc-import>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ hasCtx }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-end">
+    <div onClick="{{ closeCtx }}" style="position:absolute;inset:0;background:rgba(28,25,21,.4);backdrop-filter:blur(2px);animation:fadeIn .25s ease both"></div>
+    <div style="position:relative;width:min(460px,100%);height:100%;background:#f7f3ec;display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.25);animation:slideIn .35s cubic-bezier(.2,.9,.3,1) both">
+      <div style="display:flex;align-items:center;gap:12px;padding:18px 20px;background:#fffdf9;border-bottom:1px solid rgba(28,25,21,.08)">
+        <div style="flex:1;min-width:0"><div style="font:800 16px Nunito">Brunch Club · {{ ctx.date }}</div><div style="font:700 13px Nunito;color:#6e665b">{{ ctx.title }}</div></div>
+        <button onClick="{{ closeCtx }}" style="width:38px;height:38px;border-radius:50%;border:none;background:#f1ebdf;font:900 16px Nunito;cursor:pointer;color:#1c1915">✕</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;background:#efe8da">
+        <sc-for list="{{ ctx.lines }}" as="m" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;animation:rise .35s ease {{ m.delay }} both">
+            <sc-if value="{{ m.isSys }}" hint-placeholder-val="{{ false }}"><div style="align-self:center;padding:5px 12px;border-radius:999px;background:rgba(255,253,249,.8);font:800 12px Nunito;color:#6e665b">{{ m.text }}</div></sc-if>
+            <sc-if value="{{ m.isMsg }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:8px;align-items:flex-end">
+                <div style="width:30px;height:30px;border-radius:50%;background-color:{{ m.tint }};background-image:{{ m.img }};background-size:cover;background-position:center;display:grid;place-items:center;font:700 13px Fredoka;flex:none">{{ m.ini }}</div>
+                <div style="display:flex;flex-direction:column;gap:4px;max-width:82%">
+                  <sc-if value="{{ m.hi }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;padding:3px 9px;border-radius:999px;background:linear-gradient(100deg,#b8862f,#f0d48a,#c99a3e);font:900 10px Nunito;letter-spacing:.1em;text-transform:uppercase">Evidence</span></sc-if>
+                  <div style="padding:9px 13px 7px;border-radius:4px 16px 16px 16px;background:#fffdf9;box-shadow:{{ m.ring }}">
+                    <div style="font:800 12px Nunito;color:{{ m.nameFg }}">{{ m.name }}</div>
+                    <div style="font:700 15px/1.4 Nunito">{{ m.text }}</div>
+                    <div style="font:700 11px Nunito;color:#8b8274;text-align:right">{{ m.time }}</div>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:14px 20px;font:700 12px/1.5 Nunito;color:#6e665b;background:#fffdf9;border-top:1px solid rgba(28,25,21,.08)">Straight from your export, with the names you chose. Nothing here leaves this laptop.</div>
+    </div>
+  </div>
+</sc-if>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ceremonyLook&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ivory&quot;,&quot;blacktie&quot;,&quot;champagne&quot;],&quot;default&quot;:&quot;ivory&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;startStep&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;hello&quot;,&quot;kind&quot;,&quot;host&quot;,&quot;chat&quot;,&quot;range&quot;,&quot;spice&quot;,&quot;awards&quot;,&quot;people&quot;,&quot;show&quot;,&quot;share&quot;],&quot;default&quot;:&quot;hello&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { step: null, D: null, kind: 'friends', persona: 'goldie', spice: 'playful', up: 'idle', prog: 0, r0: 0, r1: 9, pick: null,
+    awards: [], names: {}, photos: {}, ctx: null, toast: '', typed: 0, lib: [], replay: null, autoplay: false };
+  FLOW = ['hello', 'kind', 'host', 'chat', 'range', 'spice', 'awards', 'people', 'show', 'share'];
+  LABELS = ['Start', 'Chat type', 'Host', 'Upload', 'Dates', 'Roast level', 'Awards', 'Who’s who', 'The show', 'Share'];
+  LOGS = [[0, 'Unzipping WhatsApp Chat - Brunch Club.zip'], [25, 'Parsed 29,071 messages, Jan 1 to Oct 31, 2026'], [55, 'Found 6 people'], [80, 'Mapping who talks when']];
+  LOOKS = {
+    ivory: { bg: 'radial-gradient(circle at 50% 0%,#fff3d2,#f3e8d2)', foil: 'linear-gradient(100deg,#6f4f18,#b8862f 30%,#d9b25e 50%,#7d5a1c)' },
+    blacktie: { bg: 'radial-gradient(circle at 50% 0%,#3a3020,#0f0d0a)', foil: 'linear-gradient(100deg,#b8862f,#f3d68c 35%,#fff3cc 50%,#e0b65c)' },
+    champagne: { bg: 'radial-gradient(circle at 50% 0%,#fff5ef,#f2d3c6)', foil: 'linear-gradient(100deg,#7a4a22,#c0894a 30%,#e8bd80 50%,#8a5a2a)' }
+  };
+
+  componentDidMount() {
+    import('./spammy-data.js').then(m => this.setState({ D: m.DATA, awards: this.generate(m.DATA, this.state.kind) }));
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.ctx) this.setState({ ctx: null }); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentDidUpdate() { this.syncLine(); }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); clearInterval(this.t); clearInterval(this.ti); clearTimeout(this.tt); }
+  syncLine() {
+    const l = this._line || '';
+    if (l === this._last) return;
+    this._last = l; clearInterval(this.ti); this.setState({ typed: 0 });
+    this.ti = setInterval(() => this.setState(s => { if (s.typed >= l.length) { clearInterval(this.ti); return null; } return { typed: s.typed + 2 }; }), 24);
+  }
+
+  shuffle(a) { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [b[i], b[j]] = [b[j], b[i]]; } return b; }
+  poolFor(D, kind) { return D.POOL.filter(a => a.k === 'all' || a.k === kind); }
+  generate(D, kind) {
+    const spec = this.shuffle(D.POOL.filter(a => a.k === kind)).slice(0, 1), gen = this.shuffle(D.POOL.filter(a => a.k === 'all')).slice(0, 9 - spec.length);
+    return this.shuffle([...spec, ...gen]).map(a => a.id);
+  }
+  unused() { const D = this.state.D, used = new Set(this.state.awards); return this.shuffle(this.poolFor(D, this.state.kind).filter(a => !used.has(a.id))); }
+  cur() { return this.state.step ?? this.props.startStep ?? 'hello'; }
+  go(step, extra) { this.setState({ step, ctx: null, ...(extra || {}) }); window.scrollTo(0, 0); }
+  person(id) { return this.state.D.PEOPLE.find(p => p.id === id); }
+  nm(id) { const n = this.state.names[id]; return n != null && n.trim() ? n : this.person(id).name; }
+  rn(text) {
+    let out = text || '';
+    this.state.D.PEOPLE.forEach(p => { const n = this.nm(p.id); if (n !== p.name) out = out.split(p.name).join(n); });
+    return out;
+  }
+  av(id) { const p = this.person(id), ph = this.state.photos[id], name = this.nm(id); return { name, tint: `oklch(0.86 0.08 ${p.h})`, img: ph ? `url(${ph})` : 'none', ini: ph ? '' : name[0] }; }
+  award(id) { return this.state.D.POOL.find(a => a.id === id); }
+  startUpload() {
+    if (this.state.up !== 'idle') return;
+    this.setState({ up: 'parsing', prog: 0 });
+    this.t = setInterval(() => this.setState(st => { const p = Math.min(100, st.prog + 2.5); if (p >= 100) { clearInterval(this.t); return { prog: 100, up: 'done' }; } return { prog: p }; }), 45);
+  }
+  flash(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: '' }), 2200); }
+
+  renderVals() {
+    const s = this.state, D = s.D;
+    if (!D) return { ready: false };
+    const step = this.cur(), si = this.FLOW.indexOf(step);
+    const host = D.HOSTS[s.persona].name, spiceLabel = D.SPICES[s.spice].label;
+    const M = D.MONTHS, r0 = s.r0, r1 = s.r1;
+    const rangeLabel = r0 === r1 ? `${M[r0][0]} 2026` : `${M[r0][0]} – ${M[r1][0]} 2026`;
+    const rangeCount = M.slice(r0, r1 + 1).reduce((t, m) => t + m[1], 0);
+    const maxM = Math.max(...M.map(m => m[1]));
+
+    const ids = s.awards, per = Math.ceil(ids.length / 3) || 1;
+    const groups = D.SHOWS.map((sh, gi) => ({ ...sh, ids: ids.slice(gi * per, gi * per + per) })).filter(g => g.ids.length);
+    const showName = (i) => D.SHOWS[Math.min(2, Math.floor(i / per))].name;
+    const resolve = (a) => ({ title: a.t, intro: this.rn(a.intro), wl: this.rn(a.wl),
+      noms: a.n.map(([p, stat, q]) => ({ ...this.av(p), stat: this.rn(stat), quote: this.rn(q) })),
+      win: { ...this.av(a.win), stat: this.rn(a.n.find(n => n[0] === a.win)[1]) } });
+    const showData = groups.map(g => ({ name: g.name, sub: g.sub, intro: g.intro, awards: g.ids.map(id => resolve(this.award(id))) }));
+    const winners = ids.map(id => { const a = this.award(id); return { ...this.av(a.win), title: a.t }; });
+
+    const lines = {
+      hello: `Welcome to The Spammy! I’m ${host}. Give me a group chat and I’ll throw it the awards show it deserves. Or rewatch an old one below.`,
+      kind: 'First, what kind of chat are we roasting? It changes which awards I hand out.',
+      host: 'Who’s hosting? Pick me. Or don’t. I’ll be fine. Probably.',
+      chat: s.up === 'idle' ? 'Drop in your WhatsApp export. I’ll take a quick look before reading properly.' : s.up === 'done' ? 'Quick look done: 29,071 messages, January to October. Next, pick the dates.' : 'Having a quick look… oh. Oh no. Oh, Priya.',
+      range: 'Which stretch should count? The whole year, or just that one chaotic summer?',
+      spice: `How hard should I go on them? ${spiceLabel} it is, unless you say otherwise.`,
+      awards: `I came up with ${ids.length} awards. Swap any you don’t like, shuffle the lot, or tap a quote to read the whole conversation.`,
+      people: 'Last thing. WhatsApp names are a mess. Fix them here and add photos for the red carpet.',
+      share: 'Send it to the group. Then mute the group.'
+    };
+    const line = lines[step] || '';
+    this._line = line;
+
+    const sel = (on) => ({ shadow: on ? 'inset 0 0 0 3px #d4a84b,0 20px 44px -24px rgba(140,100,30,.6)' : 'inset 0 0 0 1px rgba(28,25,21,.08)', check: on ? '✓' : '', checkBg: on ? '#d4a84b' : 'rgba(28,25,21,.06)' });
+    const library = [...s.lib, ...D.LIBRARY].map(v => ({ ...v, bg: this.LOOKS[v.look].bg, foil: this.LOOKS[v.look].foil,
+      onPlay: () => this.go('show', { replay: v, autoplay: true }) }));
+
+    const F = {
+      hello: { p: 'Make a new show', go: () => this.go('kind') },
+      kind: { p: 'Next', go: () => this.go('host') },
+      host: { p: `${host} it is`, go: () => this.go('chat') },
+      chat: { p: 'Next', go: () => s.up === 'done' && this.go('range'), dim: s.up !== 'done' },
+      range: { p: 'Next', go: () => this.go('spice') },
+      spice: { p: 'Write the awards', go: () => this.go('awards', { awards: this.generate(D, s.kind) }) },
+      awards: { p: 'Lock them in', go: () => this.go('people') },
+      people: { p: 'Roll the show', go: () => this.go('show', { replay: null, autoplay: false }) },
+      share: { p: 'Watch again', go: () => this.go('show', { replay: null, autoplay: true }), a: 'Back to start', ago: () => this.go('hello', { up: 'idle', prog: 0 }) }
+    }[step] || { p: 'Next', go: () => {} };
+
+    let ctx = null;
+    if (s.ctx) {
+      const a = this.award(s.ctx);
+      ctx = { date: a.c.d, title: a.t, lines: a.c.l.map((r, i) => {
+        const [w, t, x] = r.split('|'), sys = w === 'sys', hi = i === a.c.hi, A = sys ? { tint: 'transparent', img: 'none', ini: '', name: '' } : this.av(w);
+        return { isSys: sys, isMsg: !sys, text: this.rn(x), time: t, name: A.name, nameFg: sys ? '' : this.person(w).c, tint: A.tint, img: A.img, ini: A.ini, hi,
+          ring: hi ? 'inset 0 0 0 2px #d4a84b,0 10px 24px -12px rgba(140,100,30,.7)' : 'none', delay: (i * 0.06).toFixed(2) + 's' };
+      }) };
+    }
+
+    const prog = Math.round(s.prog);
+    const rv = s.replay;
+    return {
+      ready: true,
+      dots: this.FLOW.map((id, i) => ({ label: this.LABELS[i], w: i === si ? '26px' : '8px', bg: i === si ? '#b8862f' : i < si ? '#1c1915' : 'rgba(28,25,21,.15)', onClick: () => this.go(id, id === 'show' ? { replay: null, autoplay: false } : {}) })),
+      stepLabel: `${this.LABELS[si]} · ${si + 1} of ${this.FLOW.length}`, goHome: () => this.go('hello'),
+      persona: s.persona, hostName: host, lineFull: line, lineTyped: line.slice(0, s.typed), talking: s.typed < line.length,
+      isFlow: step !== 'show', isShow: step === 'show', isHello: step === 'hello', showHostRow: !['hello', 'show'].includes(step),
+      rowMax: step === 'awards' ? '1000px' : '880px', library,
+      isKind: step === 'kind', kinds: D.KINDS.map(k => ({ ...k, ...sel(k.id === s.kind), bg: '#fffdf9', onClick: () => this.setState({ kind: k.id }) })),
+      isHostPick: step === 'host', hosts: Object.keys(D.HOSTS).map(id => ({ id, ...D.HOSTS[id], ...sel(id === s.persona), talking: id === s.persona && s.typed < line.length, onClick: () => this.setState({ persona: id }) })),
+      isChat: step === 'chat', upIdle: s.up === 'idle', upBusy: s.up !== 'idle', startUpload: () => this.startUpload(), upStatus: s.up === 'done' ? 'Quick look done' : 'Taking a quick look…', progLabel: prog + '%',
+      logs: this.LOGS.filter(([at]) => s.prog >= at).map(([, text], i, arr) => { const done = i < arr.length - 1 || s.up === 'done'; return { text, mark: done ? '✓' : '•', dotBg: done ? '#1c1915' : '#f0d48a', dotFg: done ? '#f0d48a' : '#1c1915' }; }),
+      isRange: step === 'range', rangeLabel, rangeCount: rangeCount.toLocaleString('en-US'),
+      months: M.map(([label, n], i) => { const on = i >= r0 && i <= r1; return { label, short: (n / 1000).toFixed(1) + 'k', h: Math.round(n / maxM * 140) + 'px',
+        bg: on ? 'linear-gradient(#f0d48a,#b8862f)' : 'rgba(28,25,21,.09)', fg: on ? '#1c1915' : '#8b8274', numFg: on ? '#7d5a1c' : '#b3aa9b',
+        onClick: () => this.setState(st => st.pick == null ? { r0: i, r1: i, pick: i } : { r0: Math.min(st.pick, i), r1: Math.max(st.pick, i), pick: null }) }; }),
+      presets: [['Whole year', 0, 9], ['Last 3 months', 7, 9], ['Summer', 5, 7], ['First half', 0, 5]].map(([label, a, b]) => { const on = r0 === a && r1 === b; return { label, bg: on ? '#1c1915' : '#fffdf9', fg: on ? '#f7e3a8' : '#1c1915', onClick: () => this.setState({ r0: a, r1: b, pick: null }) }; }),
+      isSpice: step === 'spice', spices: Object.keys(D.SPICES).map(id => { const o = D.SPICES[id]; return { ...o, ...sel(id === s.spice), flames: [0, 1, 2].map(i => i < o.n ? '#e0603a' : 'rgba(28,25,21,.12)'), onClick: () => this.setState({ spice: id }) }; }),
+      isAwards: step === 'awards', awardsCount: ids.length,
+      awardCards: ids.map((id, i) => { const a = this.award(id), w = a.n.find(n => n[0] === a.win); return { title: a.t, showName: showName(i), win: this.av(a.win),
+        others: a.n.filter(n => n[0] !== a.win).map(n => this.nm(n[0])).join(' and '), quote: this.rn(w[2]), stat: this.rn(w[1]),
+        onCtx: () => this.setState({ ctx: id }),
+        onSwap: () => { const u = this.unused(); if (u.length) this.setState(st => ({ awards: st.awards.map(x => x === id ? u[0].id : x) })); },
+        onRemove: () => this.setState(st => st.awards.length > 3 ? { awards: st.awards.filter(x => x !== id) } : null) }; }),
+      shuffleAll: () => this.setState({ awards: this.generate(D, s.kind) }),
+      addAward: () => { const u = this.unused(); if (u.length && ids.length < 12) this.setState(st => ({ awards: [...st.awards, u[0].id] })); },
+      isPeople: step === 'people',
+      people: D.PEOPLE.map(p => { const won = ids.map(id => this.award(id)).filter(a => a.win === p.id).map(a => a.t); return { ...this.av(p.id), raw: p.raw, name: s.names[p.id] ?? p.name,
+        photoLabel: s.photos[p.id] ? 'Change' : '+ Photo', wins: won.length ? `Wins: ${won.join(', ')}` : 'Nominated, no wins this time',
+        onName: (e) => { const v = e.target.value; this.setState(st => ({ names: { ...st.names, [p.id]: v } })); },
+        onPhoto: (e) => { const f = e.target.files && e.target.files[0]; if (!f) return; const url = URL.createObjectURL(f); this.setState(st => ({ photos: { ...st.photos, [p.id]: url } })); } }; }),
+      isShare: step === 'share', winners,
+      shareActions: [
+        { label: 'Download video (MP4)', icon: '↓', bg: '#1c1915', fg: '#f7e3a8', onClick: () => this.flash('Rendering… saved to Downloads') },
+        { label: 'Copy share link', icon: '⧉', bg: '#fffdf9', fg: '#1c1915', onClick: () => this.flash('Link copied. Paste it in the group.') },
+        { label: 'Save to my shows', icon: '★', bg: '#fffdf9', fg: '#1c1915', onClick: () => { this.setState(st => ({ lib: [{ id: 'new' + Date.now(), title: 'Brunch Club', year: '2026', kind: D.KINDS.find(k => k.id === st.kind).label, len: '3:01', awards: ids.length, when: 'Made just now', look: this.props.ceremonyLook ?? 'ivory' }, ...st.lib] })); this.flash('Saved. It’s on the start screen.'); } }
+      ],
+      hasToast: !!s.toast, toast: s.toast,
+      showData, showTitle: rv ? `The ${rv.title} Spammys` : 'The Brunch Club Spammys', showSub: rv ? `${rv.kind} · ${rv.year}` : rangeLabel,
+      showLook: rv ? rv.look : (this.props.ceremonyLook ?? 'ivory'), showKicker: `Live from ${rv ? rv.title : 'Brunch Club'} · ${spiceLabel}`, autoplay: s.autoplay,
+      onShowDone: () => this.go('share', { replay: null }), onShowExit: () => this.go(rv ? 'hello' : 'people', { replay: null }),
+      canBack: si > 0, back: () => this.go(this.FLOW[Math.max(0, si - 1)]),
+      hasAlt: !!F.a, altLabel: F.a || '', alt: F.ago || (() => {}), primaryLabel: F.p, primary: F.go, primaryOpacity: F.dim ? '.35' : '1',
+      hasCtx: !!ctx, ctx: ctx || { lines: [] }, closeCtx: () => this.setState({ ctx: null })
+    };
+  }
+}
+</script>
+</body>
+</html>
