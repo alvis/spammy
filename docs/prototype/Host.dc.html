@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@keyframes hfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6%)}}
+@keyframes hblink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}
+@keyframes htalk{from{transform:scaleY(.35)}to{transform:scaleY(1.25)}}
+@keyframes hstache{from{transform:rotate(-4deg)}to{transform:rotate(4deg) translateY(-6%)}}
+@keyframes hlook{0%,40%,100%{transform:translate(0,0)}50%,80%{transform:translate(30%,-10%)}}
+</style>
+</helmet>
+<div style="position:relative;flex:none;width:{{ px }};height:{{ px }};font-size:{{ fs }};animation:hfloat 3.2s ease-in-out infinite">
+  <div style="position:absolute;left:26%;right:26%;bottom:-3%;height:6%;border-radius:50%;background:rgba(0,0,0,.16);filter:blur(2px)"></div>
+  <sc-if value="{{ string }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:49.4%;width:1.2%;top:-30%;height:36%;background:#9aa0ad"></div>
+  </sc-if>
+  <div style="position:absolute;left:31%;width:38%;bottom:1%;height:12%;border-radius:10% 10% 18% 18%;background:{{ baseBg }}"></div>
+  <div style="position:absolute;left:43%;width:14%;bottom:12%;height:10%;background:{{ stemBg }}"></div>
+  <div style="position:absolute;left:10%;top:2%;width:80%;height:80%;border-radius:50%;background:{{ fill }};box-shadow:inset 0 -10px 22px rgba(0,0,0,.18)">
+    <div style="position:absolute;left:17%;top:11%;width:26%;height:15%;border-radius:50%;background:rgba(255,255,255,.6);transform:rotate(-28deg)"></div>
+    <sc-if value="{{ eyes }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:25%;top:33%;width:18%;height:22%;border-radius:50%;background:#fffdf7;animation:hblink 4.2s infinite">
+        <div style="position:absolute;left:28%;top:30%;width:46%;height:42%;border-radius:50%;background:#1c1915;animation:hlook 7s ease-in-out infinite"></div>
+      </div>
+      <div style="position:absolute;left:57%;top:33%;width:18%;height:22%;border-radius:50%;background:#fffdf7;animation:hblink 4.2s infinite">
+        <div style="position:absolute;left:28%;top:30%;width:46%;height:42%;border-radius:50%;background:#1c1915;animation:hlook 7s ease-in-out infinite"></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ shades }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:18%;top:34%;width:28%;height:17%;border-radius:30% 30% 45% 45%;background:#16141a;box-shadow:inset 2px 2px 0 rgba(255,255,255,.25)"></div>
+      <div style="position:absolute;left:54%;top:34%;width:28%;height:17%;border-radius:30% 30% 45% 45%;background:#16141a;box-shadow:inset 2px 2px 0 rgba(255,255,255,.25)"></div>
+      <div style="position:absolute;left:45%;top:38%;width:10%;height:3%;background:#16141a"></div>
+    </sc-if>
+    <div style="position:absolute;left:15%;top:56%;width:13%;height:8%;border-radius:50%;background:#ff8f8f;opacity:.5"></div>
+    <div style="position:absolute;left:72%;top:56%;width:13%;height:8%;border-radius:50%;background:#ff8f8f;opacity:.5"></div>
+    <sc-if value="{{ talking }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:41%;top:63%;width:18%;height:13%;border-radius:40% 40% 50% 50%;background:#3a1a14;transform-origin:center top;animation:htalk .16s ease-in-out infinite alternate"></div>
+    </sc-if>
+    <sc-if value="{{ quiet }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:39%;top:64%;width:22%;height:9%;border-radius:0 0 50% 50%/0 0 100% 100%;background:#3a1a14"></div>
+    </sc-if>
+    <div style="position:absolute;left:24%;top:52%;width:52%;height:13%;transform-origin:50% 0;animation:{{ stacheAnim }}">
+      <div style="position:absolute;left:0;top:0;width:54%;height:100%;border-radius:80% 20% 45% 70%/90% 30% 70% 60%;background:{{ stache }};transform:rotate(14deg);transform-origin:100% 30%"></div>
+      <div style="position:absolute;right:0;top:0;width:54%;height:100%;border-radius:20% 80% 70% 45%/30% 90% 60% 70%;background:{{ stache }};transform:rotate(-14deg);transform-origin:0 30%"></div>
+      <div style="position:absolute;left:-7%;top:-28%;width:14%;height:50%;border-radius:50%;border:solid {{ stache }};border-width:0 0 0.45em 0.45em;transform:rotate(25deg)"></div>
+      <div style="position:absolute;right:-7%;top:-28%;width:14%;height:50%;border-radius:50%;border:solid {{ stache }};border-width:0 0.45em 0.45em 0;transform:rotate(-25deg)"></div>
+    </div>
+  </div>
+  <sc-if value="{{ bow }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:33%;width:34%;top:74%;height:12%;background:{{ bowBg }};clip-path:polygon(0 0,50% 38%,100% 0,100% 100%,50% 62%,0 100%)"></div>
+    <div style="position:absolute;left:46%;width:8%;top:76.5%;height:7%;border-radius:30%;background:{{ bowBg }}"></div>
+  </sc-if>
+  <sc-if value="{{ hat }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:18%;top:-26%;width:64%;height:36%;transform:rotate(-9deg);transform-origin:50% 100%">
+      <div style="position:absolute;left:18%;width:64%;top:0;height:82%;border-radius:6% 6% 0 0;background:#1c1915"></div>
+      <div style="position:absolute;left:18%;width:64%;top:58%;height:14%;background:#d4a84b"></div>
+      <div style="position:absolute;left:0;width:100%;top:80%;height:20%;border-radius:40%;background:#1c1915"></div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:200,&quot;height&quot;:220},&quot;persona&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;goldie&quot;,&quot;velvet&quot;,&quot;disco&quot;],&quot;default&quot;:&quot;goldie&quot;,&quot;tsType&quot;:&quot;'goldie'|'velvet'|'disco'&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:120,&quot;min&quot;:40,&quot;max&quot;:400,&quot;tsType&quot;:&quot;number&quot;},&quot;talking&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const persona = this.props.persona ?? 'goldie';
+    const size = this.props.size ?? 120;
+    const talking = !!this.props.talking;
+    const P = {
+      goldie: { fill: 'radial-gradient(circle at 34% 28%,#fff4c8 0%,#efcd78 30%,#c99a3e 62%,#7d5a1c 100%)', baseBg: 'linear-gradient(#2c251c,#15120e)', stemBg: '#b8862f', bowBg: '#8e1d30', eyes: true, bow: true },
+      velvet: { fill: 'radial-gradient(circle at 34% 28%,#ffc2cc 0%,#d9576f 32%,#9c2238 64%,#5c0f1d 100%)', baseBg: 'linear-gradient(#d9b25e,#9a7424)', stemBg: '#d4a84b', bowBg: '#1c1915', eyes: true, hat: true },
+      disco: { fill: 'repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 8.5%,rgba(70,74,92,.28) 8.5% 10%),repeating-linear-gradient(90deg,rgba(255,255,255,0) 0 8.5%,rgba(70,74,92,.28) 8.5% 10%),radial-gradient(circle at 34% 28%,#ffffff 0%,#e4e7ee 35%,#a9afbd 70%,#6d7382 100%)', baseBg: 'transparent', stemBg: 'transparent', bowBg: '#6b5cff', shades: true, string: true, bow: true }
+    }[persona] || {};
+    return {
+      px: size + 'px', fs: (size / 16).toFixed(1) + 'px', fill: P.fill, baseBg: P.baseBg, stemBg: P.stemBg, bowBg: P.bowBg,
+      eyes: !!P.eyes, shades: !!P.shades, bow: !!P.bow, hat: !!P.hat, string: !!P.string,
+      talking, quiet: !talking,
+      stache: { goldie: '#4a2c12', velvet: '#1c1915', disco: '#2a2540' }[persona] || '#4a2c12',
+      stacheAnim: talking ? 'hstache .18s ease-in-out infinite alternate' : 'none'
+    };
+  }
+}
+</script>
+</body>
+</html>

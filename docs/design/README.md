@@ -1,6 +1,6 @@
 # Design reference — The Spammy
 
-Distilled from the team's own design prototype (read 2026-11-01). This file is the version of record for contributors. Sample data lives in `apps/web/src/sample/brunch-club.ts` (fictional people, safe to commit).
+Brand tokens and ceremony details distilled from the clickable prototype in [`docs/prototype/`](../prototype/README.md). The step-by-step host journey, including decisions that override the prototype, is in [`docs/user-flow.md`](../user-flow.md). Sample data lives in `apps/web/src/sample/brunch-club.ts` (fictional people, safe to commit).
 
 ## Brand
 
@@ -21,10 +21,10 @@ The AI host (persona avatar + speech bubble, text typed ~2 chars / 24 ms) speaks
 | 4 | Upload (`chat`) | Dashed drop zone ".zip — Drop your WhatsApp export here — Open the group → tap its name → Export chat → Without media — or try the sample: Brunch Club"; then progress % + log lines (Unzipping…, Parsed N messages, Found N people, Mapping who talks when) | idle: "Drop in your WhatsApp export. I'll take a quick look before reading properly." · busy: "Having a quick look… oh. Oh no. Oh, {name}." · done: "Quick look done: {n} messages, {from} to {to}. Next, pick the dates." | Next (disabled until done) |
 | 5 | Dates (`range`) | Month bar chart (message count per month), tap start + end; presets Whole year / Last 3 months / Summer / First half | "Which stretch should count? The whole year, or just that one chaotic summer?" | Next |
 | 6 | Roast level (`spice`) | 3 cards with 1–3 flame dots: Gentle (Compliments with a wink), Playful roast (Teasing, never cruel), Savage (Nobody leaves unhurt) | "How hard should I go on them? {level} it is, unless you say otherwise." | Write the awards |
-| 7 | Awards (`awards`) | "{n} awards · 3 shows", ⟳ Shuffle all, + Add an award; card per award: show name, title, ⟳ swap, ✕ remove, winner avatar "{name} wins over {a} and {b}", quote bubble "{stat} · See the conversation →" (opens the receipts drawer) | "I came up with {n} awards. Swap any you don't like, shuffle the lot, or tap a quote to read the whole conversation." | Lock them in |
+| 7 | Awards (`awards`) | "{n} awards · 3 shows", ⟳ Shuffle all, + Add an award; card per award: show name, title, ⟳ swap, ✕ remove, nominees with **Seal it** / **Pick the winner** (sealed winners stay hidden; see `docs/user-flow.md`), quote bubble "{stat} · See the conversation →" (opens the receipts drawer) | "I came up with {n} awards. Swap any you don't like, shuffle the lot, or tap a quote to read the whole conversation." | Lock them in |
 | 8 | Who's who (`people`) | Card per person: round photo (tap → file picker, "+ Photo"/"Change"), "In the chat as "{raw}"", editable name, "Wins: …" | "Last thing. WhatsApp names are a mess. Fix them here and add photos for the red carpet." | Roll the show |
 | 9 | The show (`show`) | Full-width ceremony player (below) | — | (player) |
-| 10 | Share (`share`) | Winners poster card (title, date range, rows "award · avatar · name"); actions Download video (MP4), Copy share link, Save to my shows | "Send it to the group. Then mute the group." | Watch again · Back to start |
+| 10 | Share (`share`) | Winners poster card (title, date range, rows "award · avatar · name"); actions Download video (MP4), Download poster (PNG), Save to my shows (no share link) | "Send it to the group. Then mute the group." | Watch again · Back to start |
 
 Receipts drawer (right side sheet): "{group} · {date}", award title, WhatsApp-style bubbles with avatar, coloured name, time; system pills ("6 days later"); the evidence message has a gold "Evidence" tag + ring. Footer: "Straight from your export, with the names you chose. Nothing here leaves this laptop."
 

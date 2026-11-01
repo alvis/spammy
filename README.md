@@ -82,7 +82,7 @@ _Concrete example: added before submission (issue → Codex task → merged PR).
 
 ## Credits
 
-- **Design**: the team's own prototype, distilled in [`docs/design/README.md`](docs/design/README.md).
+- **Design**: the team's own clickable prototype in [`docs/prototype/`](docs/prototype/README.md), the host journey in [`docs/user-flow.md`](docs/user-flow.md), and brand tokens in [`docs/design/README.md`](docs/design/README.md).
 - **Feature work**: built with OpenAI Codex from the issues in this repository.
 - **Libraries**: [HyperFrames](https://github.com/heygen-com/hyperframes) (Apache-2.0), [OpenAI Agents SDK](https://github.com/openai/openai-agents-js) (MIT), [openai-node](https://github.com/openai/openai-node) (Apache-2.0), [ElevenLabs JS SDK](https://github.com/elevenlabs/elevenlabs-js) (MIT), [Hono](https://hono.dev), [React](https://react.dev), [Vite](https://vite.dev), [zod](https://zod.dev).
 - **Fonts**: Fredoka and Nunito (SIL Open Font License) via Google Fonts.
