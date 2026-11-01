@@ -40,12 +40,13 @@ Receipts drawer (right side sheet): "{group} · {date}", award title, WhatsApp-s
 
 16:9 stage, container-query units, host avatar + typed caption bubble bottom-left ("{host} · your AI host"). Scene sequence and default durations (seconds):
 
-`open` 7 → for each show: `show` 4 → for each award: `intro` 4.5, `noms` 6.5, `env` 6.5 → `finale` 9
+`open` 7 → for each show: `show` 4 → for each award: `intro` 4.5, `noms` 9, `env` 6.5 → `finale` 9
 
 - **open**: red velvet curtains part (1.6s), "The Spammy presents", foil title, subtitle. Line: "Good evening, and welcome to The Spammy. I'm {host}, and I have read every single one of your messages. I'm so sorry."
 - **show**: "Now presenting · Show n of N", show name (foil), sub; line = show intro.
 - **intro**: pill "{show} · Award n of N", "The award for", title (pop); line = award intro.
-- **noms**: "The nominees are…", 3 cards (avatar/photo or initial on tint, name, stat, quote bubble), staggered pop 0.3s.
+- **noms**: "The nominees are…", 3 tall portrait cards (name, stat), staggered pop 0.2s; from 1s the camera zooms to each nominee for 2.4s, dimming the others and showing the focused quote bubble. Line: "{name}. {stat}." The built app shows costume avatars (#15), not the prototype's "AI PORTRAIT" placeholders.
+- **stage**: gold stage edge and two rows of audience silhouettes that bob, and cheer during the winner reveal and finale.
 - **env**: sealed envelope wiggles ("The envelope, please."); live player waits for a tap ("Tap to break the seal"); flap opens, card slides out "And the award goes to" → winner avatar in gold ring, foil name, stat; confetti 6.4s. Line = winner line.
 - **finale**: "That's a wrap." + winners grid (3 columns). Line: "That's our show. Thank you for being this unwell in the group chat. See you next year."
 - Player chrome: play/pause, time, seek bar with chapter ticks per award, look switcher (Ivory / Black tie / Champagne), Exit; end overlay "↺ Play again", "Share it →".
