@@ -39,6 +39,9 @@ Every screen, route and agent must follow the host journey in [`docs/user-flow.m
 - Keep the prototype's step order, step names, host lines, button labels and motion. The step ids in `apps/web/src/flow.ts` are fixed.
 - When the prototype and `docs/user-flow.md` disagree, `docs/user-flow.md` wins. Its "Product decisions that override the prototype" section is binding.
 - Rebuild the prototype in React and HyperFrames. Never import `docs/prototype/` files into the app.
+- Use the supplied `costumes/` artwork through a shared typed catalog with stable, readable costume IDs and local asset paths. Make the assets available to the production web build and renderer; do not regenerate them for the demo. Costume integration is tracked in [#15](https://github.com/alvis/spammy/issues/15).
+- Add each person's costume preview and chooser within **Who's who**, keeping the ten-step journey. Persist the validated costume ID with the cast member and provide a deterministic default for older shows and a useful preview without a photo. Cast costumes are separate from the host persona and ceremony look.
+- Reuse the same face crop and costume composition in setup, nominee cards, winner reveals, the finale, the poster and MP4 exports. Navigation, reload and saved-show replay must preserve the choice.
 - To change the flow, update `docs/user-flow.md` in the same pull request and say why.
 
 ## Commands

@@ -107,11 +107,13 @@ The header shows the brand, one dot per step (dots for finished steps are clicka
   - a round photo (tap it to choose an image; the badge reads "+ Photo", or "Change" once a photo is set);
   - "In the chat as "{raw export name}"";
   - an editable display name;
+  - a costume preview and chooser using the supplied local `costumes/` artwork;
   - "Wins: {award titles}" or "Nominated, no wins this time".
 - **Names**: renamed people update everywhere straight away, including award cards, receipts, the ceremony and the poster.
+- **Costumes**: select a costume per person from a shared catalog with stable IDs. Save the validated ID with the cast member and restore it on Back, reload and saved-show replay; older shows use a deterministic default. Preview the costume even without a photo, and preserve the face crop and artwork proportions when a photo is present. Reuse the same avatar composition for nominee cards, winner reveals, the finale, poster and MP4 exports. Costume selection is independent of the host persona and ceremony look, and requires no image generation or paid API call (#15).
 - **Host line**: "Last thing. WhatsApp names are a mess. Fix them here and add photos for the red carpet."
 - **Primary**: **Roll the show**. This starts production, then opens the player.
-- **Data**: `POST /api/shows/:id/photos` (#2). Portraits and group photos are both accepted (see overrides). **Roll the show** calls `POST /api/shows/:id/production`, which writes the script and records the narration (#8).
+- **Data**: `POST /api/shows/:id/photos` (#2). Portraits and group photos are both accepted (see overrides). Costume integration (#15) must persist the selection through the `POST /api/shows/:id/cast` update owned by #2 and the validated cast contract. **Roll the show** calls `POST /api/shows/:id/production`, which writes the script and records the narration (#8).
 
 ### 9. The show (`show`)
 
@@ -162,6 +164,7 @@ The prototype is a quick sketch. These confirmed decisions take precedence over 
 |---|---|---|---|
 | Awards, step 7 | Every card shows "{winner} wins over {a} and {b}" | **Seal or pick** for each award. Each card lists its nominees and offers two choices: **Seal it** (the agent judges the winner and keeps it hidden until the envelope opens) or **Pick the winner** (the host chooses a nominee). Sealed cards never reveal the winner during setup. Who's who shows "Wins: …" only for host-picked awards and says "{n} sealed" for the rest. | The host wants to be surprised by the envelopes too, but can also settle disputes |
 | The show, `env` scene | The envelope opens by itself after 1.6 s | **Tap to open** in the live player. The scene holds on the wiggling envelope with "Tap to break the seal" until the host taps it or presses Space. MP4 exports play straight through with the prototype timing. | The host performs the reveal live in the room |
+| Who's who, step 8 | Photos and names, with no costume chooser | Add a per-person costume preview and chooser within this step, using the supplied `costumes/` artwork. Persist a stable costume ID and reuse the same avatar composition in the ceremony and exports. Older shows use a default, and missing photos still have a useful preview (#15). | Costumes from #13 should appear consistently throughout the journey without adding a step |
 | Who's who, step 8 | One portrait per person | Each person accepts a portrait or a **group photo**. For a group photo, `gpt-6.1-terra` finds the faces and the host taps the face that belongs to this person. The crop is stored as a `FaceBox`. This is post-hackathon (#10); until then, use the portrait only. | Most people have group photos, not headshots |
 | Share, step 10 | Includes **Copy share link** | No share link. The app is local-only and nothing is uploaded. Offer **Download video (MP4)** (16:9 and 9:16), **Download poster (PNG)** and **Save to my shows**. | Privacy promise: nothing leaves the laptop |
 | Upload, step 4 | Scripted progress and log lines | Progress and log lines come from the real parse. The sample button loads the fictional Brunch Club. | Honest feedback |
@@ -179,5 +182,6 @@ The prototype is a quick sketch. These confirmed decisions take precedence over 
 | Script and narration behind "Roll the show" | #8 |
 | Live ceremony player | #5 |
 | MP4 and poster export | #9 (stretch) |
+| Costume selection, persistence and avatars across the journey | #15 |
 | Group-photo face picking | #10 (post-hackathon) |
 | Music cues | #11 (post-hackathon) |
