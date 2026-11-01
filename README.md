@@ -20,7 +20,7 @@ Built at the [DevDay Exchange Community Hackathon, London](https://luma.com/dde-
 
 | | |
 |---|---|
-| **Idea** | Turn a year of group-chat chaos into an animated award ceremony ("Wrapa": a Wrapped for your chat) |
+| **Idea** | Turn a year of group-chat chaos into an animated award ceremony ("The Spammy": a Wrapped for your chat) |
 | **For** | Friend groups, housemates, families and teams who share a WhatsApp group; one person hosts, everyone watches |
 | **Stack** | TypeScript · pnpm workspace · Vite + React · Hono on Node · zod · OpenAI Responses API + Agents SDK · ElevenLabs · HyperFrames |
 | **Demo video** | _link added before submission (≤ 90 s)_ |
