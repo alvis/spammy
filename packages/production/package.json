@@ -1,5 +1,5 @@
 {
-  "name": "@wrapa/production",
+  "name": "@spammy/production",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,6 +11,6 @@
   },
   "dependencies": {
     "@elevenlabs/elevenlabs-js": "^2.75.0",
-    "@wrapa/domain": "workspace:*"
+    "@spammy/domain": "workspace:*"
   }
 }

@@ -4,7 +4,7 @@ Guidance for coding agents (OpenAI Codex) working in this repository.
 
 ## What this is
 
-Wrapa turns a WhatsApp group export into an animated award ceremony ("Who ate 2026?"). One host runs it locally: upload chat → pick host persona, look, and roast level → AI suggests awards → host seals or picks each winner → AI writes the script → ElevenLabs voices and scores it → HyperFrames renders the ceremony locally → host plays it live and exports MP4 and a poster PNG.
+Spammy turns a WhatsApp group export into an animated award ceremony ("Who ate 2026?"). One host runs it locally: upload chat → pick host persona, look, and roast level → AI suggests awards → host seals or picks each winner → AI writes the script → ElevenLabs voices and scores it → HyperFrames renders the ceremony locally → host plays it live and exports MP4 and a poster PNG.
 
 Hackathon scope: one complete core journey. Anything else is post-hackathon.
 
@@ -18,7 +18,7 @@ packages/parser   WhatsApp export parsing (Android .txt, iPhone .txt, iPhone .zi
 packages/analysis pseudonymization, stats, long-context highlight pass
 packages/agents   OpenAI Agents SDK: award suggestion/judging, storyboard script, face location
 packages/production ElevenLabs narration, measured timing lock, music composed to timing
-packages/store    one JSON file per show under WRAPA_DATA_DIR
+packages/store    one JSON file per show under SPAMMY_DATA_DIR
 packages/ceremony HyperFrames composition, local render (16:9, 9:16), poster PNG
 fixtures/         synthetic exports only — never commit real chats
 docs/prototype    clickable HTML prototype of the host flow and ceremony (reference only)
@@ -81,7 +81,7 @@ Unimplemented features throw `new NotImplementedError('<package>.<function>')`; 
 
 - API keys are read from `.env` by the server only (see `.env.example`); never import them into `apps/web`.
 - Pseudonymize chats (`analysis.pseudonymizeChat`) before any OpenAI call. Receipts quote messages with other names masked.
-- Uploaded chats, photos, and renders go under `WRAPA_DATA_DIR` (git-ignored).
+- Uploaded chats, photos, and renders go under `SPAMMY_DATA_DIR` (git-ignored).
 
 ## Models
 
