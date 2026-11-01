@@ -34,7 +34,7 @@ Dependency direction (no cycles, no upward imports):
 
 ## Follow the prototype flow
 
-Every screen, route and agent must follow the host journey in [`docs/user-flow.md`](docs/user-flow.md) and the clickable prototype in [`docs/prototype/`](docs/prototype/README.md). Run the prototype with `npx serve docs/prototype`.
+Every screen, route and agent must follow the host journey in [`docs/user-flow.md`](docs/user-flow.md) and the clickable prototype in [`docs/prototype/`](docs/prototype/README.md). Open `docs/prototype/index.html` in a browser to click through it. It is generated from `docs/prototype/src/` by `node docs/prototype/bundle.mjs`, so never edit it by hand.
 
 - Keep the prototype's step order, step names, host lines, button labels and motion. The step ids in `apps/web/src/flow.ts` are fixed.
 - When the prototype and `docs/user-flow.md` disagree, `docs/user-flow.md` wins. Its "Product decisions that override the prototype" section is binding.

@@ -1,6 +1,6 @@
 # User flow
 
-This is the host journey every screen, route and agent in this repository must follow. It is written from the clickable prototype in [`docs/prototype/`](prototype/README.md) (run it with `npx serve docs/prototype`). It also maps each step to the server route and issue that implement it.
+This is the host journey every screen, route and agent in this repository must follow. It is written from the clickable prototype in [`docs/prototype/`](prototype/README.md) (open `docs/prototype/index.html` in a browser). It also maps each step to the server route and issue that implement it.
 
 Rules for contributors and coding agents:
 
@@ -117,7 +117,7 @@ The header shows the brand, one dot per step (dots for finished steps are clicka
 
 ### 9. The show (`show`)
 
-The ceremony player sits full width on a warm backdrop. It is a 16:9 stage that scales with container-query units. A host avatar and a typed caption bubble ("{host} · your AI host") sit bottom-left.
+The ceremony player sits full width on a warm backdrop. It is a 16:9 stage that scales with container-query units. A host avatar and a typed caption bubble ("{host} · your AI host") sit bottom-left, above a gold stage edge. Two rows of audience silhouettes fill the bottom of the stage: they bob gently and jump up to cheer while a winner is revealed and through the finale.
 
 **Scenes** (default seconds; the real timings lock to the measured narration from #8):
 
@@ -126,7 +126,7 @@ The ceremony player sits full width on a warm backdrop. It is a 16:9 stage that 
 | `open` | 7 | Red velvet curtains part (1.6 s). Then "The Spammy presents", the show title in foil, and the subtitle (date range or kind · year) | "Good evening, and welcome to The Spammy. I'm {host}, and I have read every single one of your messages. I'm so sorry." |
 | `show` | 4 per show | "Now presenting · Show n of N", the show name in foil, and its strapline | The show intro |
 | `intro` | 4.5 per award | Pill "{show} · Award n of N", "The award for", and the title popping in | The award intro |
-| `noms` | 6.5 per award | "The nominees are…" and 3 nominee cards (photo or initial on a tint, name, stat, quote) popping in 0.3 s apart | — |
+| `noms` | 9 per award | "The nominees are…" and 3 tall nominee cards (portrait, name, stat) popping in 0.2 s apart. From 1 s to 8.2 s the camera zooms to each nominee in turn for 2.4 s: the title fades, the other cards dim, and the focused card shows its quote bubble | "The nominees are…", then "{name}. {stat}." for each nominee in focus |
 | `env` | 6.5 per award | A sealed envelope wiggles ("The envelope, please."). It opens, a card slides out ("And the award goes to"), the winner appears in a gold ring with their name in foil and the stat, and confetti falls | The winner line |
 | `finale` | 9 | "That's a wrap." and a 3-column grid of the winners | "That's our show. Thank you for being this unwell in the group chat. See you next year." |
 
@@ -163,6 +163,7 @@ The prototype is a quick sketch. These confirmed decisions take precedence over 
 | Where | Prototype | Build this instead | Why |
 |---|---|---|---|
 | Awards, step 7 | Every card shows "{winner} wins over {a} and {b}" | **Seal or pick** for each award. Each card lists its nominees and offers two choices: **Seal it** (the agent judges the winner and keeps it hidden until the envelope opens) or **Pick the winner** (the host chooses a nominee). Sealed cards never reveal the winner during setup. Who's who shows "Wins: …" only for host-picked awards and says "{n} sealed" for the rest. | The host wants to be surprised by the envelopes too, but can also settle disputes |
+| The show, `noms` scene | Nominee cards are "AI PORTRAIT" placeholders showing an image prompt ("{name} as a gold-statue caricature, {award}") | Show each nominee's costume avatar: the person's face crop composed with their chosen costume from the supplied `costumes/` artwork, or the costume preview when there is no photo. No image generation (#15). | Costumes replace generated portraits and must look the same everywhere |
 | The show, `env` scene | The envelope opens by itself after 1.6 s | **Tap to open** in the live player. The scene holds on the wiggling envelope with "Tap to break the seal" until the host taps it or presses Space. MP4 exports play straight through with the prototype timing. | The host performs the reveal live in the room |
 | Who's who, step 8 | Photos and names, with no costume chooser | Add a per-person costume preview and chooser within this step, using the supplied `costumes/` artwork. Persist a stable costume ID and reuse the same avatar composition in the ceremony and exports. Older shows use a default, and missing photos still have a useful preview (#15). | Costumes from #13 should appear consistently throughout the journey without adding a step |
 | Who's who, step 8 | One portrait per person | Each person accepts a portrait or a **group photo**. For a group photo, `gpt-6.1-terra` finds the faces and the host taps the face that belongs to this person. The crop is stored as a `FaceBox`. This is post-hackathon (#10); until then, use the portrait only. | Most people have group photos, not headshots |
