@@ -1,6 +1,20 @@
 # The Spammy — Who ate 2026?
 
-**Your group chat gets its own awards show.** Drop in a WhatsApp export, pick an AI host, and The Spammy finds the year's best moments, hands out awards backed by real quotes, and plays the ceremony live, with a tap-to-open envelope for every winner.
+**Your group chat gets its own end-of-year awards show.**
+
+We're all the main characters in our own lives. And to someone, we're superstars.
+
+So shouldn't we get an award at the end of the year, too?
+
+The friend who made everyone laugh the most. The one who always did the work of getting everyone together. The person who still replied at 3 a.m.
+
+They might not have a trophy, but they've earned one. And the evidence is all there in the group chat.
+
+That's why we built **The Spammy**: an end-of-year awards ceremony just for your group chat.
+
+Upload your WhatsApp conversations, and AI finds the moments that made your year, suggesting awards and nominees backed by real messages. Choose your host and confirm the winners, then watch your own ceremony, from the nominee introductions to opening the envelopes.
+
+Share the stage with your friends. Who's taking home which award? You'll have to open the envelope to find out.
 
 Built at the [DevDay Exchange Community Hackathon, London](https://luma.com/dde-ldn-hack) on Sunday 1 November 2026, between 11:00 and the 17:00 submission deadline.
 
